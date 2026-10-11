@@ -1,13 +1,14 @@
 import type { MetadataRoute } from "next";
 import { LIBRARY } from "@/components/library/registry";
+import { BLOCKS } from "@/lib/blocks";
 import { SITE_URL } from "@/lib/site";
 
 /**
  * Every page the site actually serves.
  *
- * The component pages are listed one by one rather than as a pattern, because
- * they are the pages worth finding — each is a component somebody might be
- * searching for by name.
+ * The component and block pages are listed one by one rather than as a pattern, because
+ * they are the pages worth finding — each is a component or a section somebody
+ * might be searching for by name.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -30,6 +31,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.9,
+    })),
+    {
+      url: `${SITE_URL}/blocx`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...BLOCKS.map((block) => ({
+      url: `${SITE_URL}/blocx/${block.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
     })),
     {
       url: `${SITE_URL}/testimonials`,

@@ -26,3 +26,14 @@ export async function readLibrarySource(file: string): Promise<string> {
   }
   return readFile(path.join(LIBRARY_DIR, file), "utf8");
 }
+
+/** The one directory a block page is allowed to read from, spelled out for the same reason. */
+const BLOCKS_DIR = path.join(process.cwd(), "components", "blocks", "demo");
+
+/** Read one of Blocx's block source files as text, during the build. */
+export async function readBlockSource(file: string): Promise<string> {
+  if (!/^[\w.-]+\.(tsx|ts|css)$/.test(file) || file.includes("..")) {
+    throw new Error(`readBlockSource: not a block source file: ${file}`);
+  }
+  return readFile(path.join(BLOCKS_DIR, file), "utf8");
+}

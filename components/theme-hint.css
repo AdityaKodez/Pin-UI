@@ -118,6 +118,23 @@
   animation-duration: 0.7s;
 }
 
+/* still: drawn in place and left there */
+.thint--still .thint__line,
+.thint--still .thint__head,
+.thint--still .thint__text,
+.thint--still .thint__rock {
+  animation: none;
+}
+
+.thint--still .thint__line,
+.thint--still .thint__head {
+  stroke-dashoffset: 0;
+}
+
+.thint--still .thint__text {
+  clip-path: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .thint__line,
   .thint__head,

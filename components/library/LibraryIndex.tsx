@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import BlocksLink from "@/components/BlocksLink";
 import { motion, useReducedMotion } from "motion/react";
 import ThemeMark from "../ThemeMark";
 import MobileMenu from "../MobileMenu";
@@ -116,6 +117,7 @@ export default function LibraryIndex() {
           <Link className="lib__link" href="/">
             Home
           </Link>
+          <BlocksLink className="lib__link" />
           <Link className="lib__link" href="/#testimonials">
             Testimonials
           </Link>

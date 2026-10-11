@@ -1,0 +1,125 @@
+/* ===========================================================================
+   The way in to Blocx: two curtains and the lockup that assembles on them.
+   Red in both themes — it is the brand's own moment.
+=========================================================================== */
+
+.bgate {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: auto;
+  cursor: progress;
+}
+
+.bgate__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.bgate__curtain {
+  position: absolute;
+  inset: 0;
+  will-change: clip-path;
+}
+
+.bgate__curtain--ink {
+  background: #0a0b0f;
+}
+
+.bgate__curtain--red {
+  background: #e60024;
+  /* a soft light from below, so the field is not flat */
+  background-image: radial-gradient(120% 80% at 50% 110%, rgb(255 80 104 / 0.55), transparent 60%);
+}
+
+.bgate__center {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 28px);
+  color: #ffffff;
+  font-family: var(--pin-font);
+}
+
+.bgate__lockup {
+  --gate-size: clamp(56px, 7vw, 92px);
+
+  display: flex;
+  align-items: center;
+  gap: calc(var(--gate-size) * 0.26);
+}
+
+.bgate__mark {
+  position: relative;
+  width: var(--gate-size);
+  height: var(--gate-size);
+}
+
+.bgate__tiles {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: calc(var(--gate-size) * 0.07);
+}
+
+.bgate__tile {
+  display: block;
+  border-radius: 22% 0 22% 0;
+  background: #ffffff;
+  box-shadow: 0 4px 14px -6px rgb(80 0 10 / 0.5);
+}
+
+.bgate__badge {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 20% 0 20% 0;
+  background: #ffffff;
+  color: #e60024;
+  box-shadow: 0 14px 40px -16px rgb(60 0 8 / 0.6);
+}
+
+.bgate__star {
+  width: 50%;
+  height: 50%;
+}
+
+.bgate__word {
+  display: inline-flex;
+  font-size: var(--gate-size);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* each letter in a clipping box, so it rises out of the line */
+.bgate__letterBox {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.bgate__letter {
+  display: inline-block;
+}
+
+.bgate__note {
+  margin: 0;
+  color: rgb(255 255 255 / 0.82);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(13px, 1.1vw, 15px);
+  letter-spacing: -0.01em;
+}

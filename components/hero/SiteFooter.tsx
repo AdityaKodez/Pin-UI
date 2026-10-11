@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import BlocksLink from "@/components/BlocksLink";
 import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform, type Transition } from "motion/react";
 import PinMark from "../PinMark";
 import { softSpring } from "@/lib/motion";
 import { LINKS } from "@/lib/links";
+import { playKeyDown, playKeyUp } from "@/lib/sound";
 import "./footer.css";
 
 /**
@@ -23,7 +25,10 @@ import "./footer.css";
  *
  * And the key is a key. Press it — click, tap, or Enter while the footer is on
  * screen — and the hand comes down on it and it sinks into its lit well, then
- * springs back up as you let go. The scene is three layers from Figma 521:30:
+ * springs back up as you let go, with the sound of a mechanical switch — a
+ * thock as it bottoms out and a lighter click as it comes back up, the second
+ * timed to the key's own return so even the quickest tap is heard whole. The
+ * sound is made in the browser; there is no file. The scene is three layers from Figma 521:30:
  * the desk with the key up, the same desk with the key down (redrawn onto the
  * up scene's perspective so only the key moves), and the hand on its own,
  * which drops by exactly the distance the two drawings put between it.
@@ -49,11 +54,17 @@ export default function SiteFooter() {
   const [hovered, setHovered] = useState(false);
   const [presses, setPresses] = useState(0);
   const downAt = useRef(0);
+  /* whether the key is down, for the sound: one thock per press, one click per release */
+  const isDown = useRef(false);
   const releaseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const press = useCallback(() => {
     if (releaseTimer.current) clearTimeout(releaseTimer.current);
     downAt.current = performance.now();
+    if (!isDown.current) {
+      isDown.current = true;
+      playKeyDown();
+    }
     setPressed(true);
     setPresses((n) => n + 1);
   }, []);
@@ -61,7 +72,14 @@ export default function SiteFooter() {
   const release = useCallback(() => {
     const held = performance.now() - downAt.current;
     if (releaseTimer.current) clearTimeout(releaseTimer.current);
-    releaseTimer.current = setTimeout(() => setPressed(false), Math.max(0, MIN_PRESS_MS - held));
+    releaseTimer.current = setTimeout(() => {
+      /* the click comes as the key does, not when the finger lifts */
+      if (isDown.current) {
+        isDown.current = false;
+        playKeyUp();
+      }
+      setPressed(false);
+    }, Math.max(0, MIN_PRESS_MS - held));
   }, []);
 
   useEffect(() => () => {
@@ -200,6 +218,7 @@ export default function SiteFooter() {
             <Link className="pfoot__navLink" href="/#components">
               Components
             </Link>
+            <BlocksLink className="pfoot__navLink" />
             <Link className="pfoot__navLink" href="/#testimonials">
               Testimonials
             </Link>

@@ -1,5 +1,6 @@
 "use client";
 
+import BlocksLink from "../BlocksLink";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import HeroWall from "./HeroWall";
 import PinterestPeek from "./PinterestPeek";
@@ -94,6 +95,7 @@ export default function HeroSection() {
                 <a className="hero__navLink" href="#components">
                   Components
                 </a>
+                <BlocksLink className="hero__navLink" />
                 <a className="hero__navLink" href="#testimonials">
                   Testimonials
                 </a>

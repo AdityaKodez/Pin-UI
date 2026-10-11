@@ -39,23 +39,43 @@ const nextConfig = {
   outputFileTracingIncludes: {
     "/components/[slug]": ["./components/library/*.tsx", "./components/library/*.css"],
     "/r/[slug]": ["./components/library/*.tsx", "./components/library/*.css"],
+    "/blocx/[slug]": [
+      "./components/blocks/demo/*.tsx",
+      "./components/blocks/demo/*.ts",
+      "./components/blocks/demo/*.css",
+    ],
   },
 
   /*
-   * The landing page and the component pages used to live under `/demo`.
-   * Anything already pointing there — a shared link, a bookmark, an index —
-   * is sent to where they are now rather than to a 404.
+   * Old addresses, sent to where things live now rather than to a 404: the
+   * landing page and component pages used to live under `/demo`, and Blocx
+   * was first at `/blocks` — its pages, its previews and its pictures, all of
+   * which keep their path under `/blocx`.
    */
   async redirects() {
     return [
       { source: "/demo", destination: "/", permanent: true },
       { source: "/demo/components/:slug", destination: "/components/:slug", permanent: true },
+      { source: "/blocks", destination: "/blocx", permanent: true },
+      { source: "/blocks/:path*", destination: "/blocx/:path*", permanent: true },
     ];
   },
 
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
+      {
+        /*
+         * Blocx previews each block in an iframe on its own page, so the bare
+         * block pages — and only those — may be framed, and only by Pin UI
+         * itself. Listed after the rule above, so for these paths it wins.
+         */
+        source: "/blocx/preview/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+        ],
+      },
       {
         /*
          * The component clips are the heaviest thing on the site and they do

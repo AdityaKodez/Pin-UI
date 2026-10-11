@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, type HTMLMotionProps } from "motion/react";
 import { LINKS } from "@/lib/links";
 import { formatStars, useGitHubStars } from "@/lib/useGitHubStars";
+import "./github-stars.css";
 
 /**
  * The GitHub square in the masthead, with the repository's stars behind it.

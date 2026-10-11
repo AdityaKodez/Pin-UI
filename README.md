@@ -5,76 +5,34 @@
 <p align="center">
   <a href="https://pinui.xyz"><b>pinui.xyz</b></a>
   &nbsp;·&nbsp;
-  <a href="https://in.pinterest.com/rachitrampage23/pin-ui/">Pinterest board</a>
-  &nbsp;·&nbsp;
   <a href="https://x.com/RachitThakur146">@RachitThakur146</a>
 </p>
 
 # Pin UI
 
-Interface designs from Pinterest, rebuilt as real React components — animated,
-interactive, and ready to paste into your project. Three new ones every week.
+Designs from Pinterest, rebuilt as animated React components — plus **Blocx**,
+whole page sections ready to drop in. Browse and preview everything at
+[pinui.xyz](https://pinui.xyz).
 
-## Components
-
-| Component | Description | Slug |
-| :-- | :-- | :-- |
-| **Liquid Tabs** | A notifications card whose active tab is liquid, flowing from tab to tab. Light and dark. | `liquid-tabs` |
-| **Thermal Dial** | A temperature dial with a travelling wave, rolling digits and a heat wash. Light and dark. | `thermal-dial` |
-| **Lamp Switch** | A pendant lamp on a cord with real swing physics and a liquid switch. Light and dark. | `lamp-switch` |
-| **Joystick** | A pixel-art arcade stick with a real gate, spring and microswitch clicks. Light and dark. | `joystick` |
-| **Weather** | A weather square that opens out into a five-day forecast. | `weather` |
-| **Recorder** | A voice recorder with a scrolling waveform, playback and scrubbing. | `recorder` |
-| **Taxi** | A taxi-hailing card that runs the whole ride from one tap. | `taxi` |
-| **Chips** | 3D chips that press into the surface. Light and dark. | `chips` |
-| **Egg OTP** | A one-time-code field whose eggs crack on a wrong code. Light and dark. | `otp-input` |
-| **Add Member** | A people picker with search, gooey toggles and a flying stack. Light and dark. | `add-member` |
-| **Count down** | A session in blocks, counting down in real time. | `session-list` |
-| **Balance Card** | A counting balance with a liquid currency selector. | `balance-card` |
-| **Add To Cart** | A product card that opens into a drag-to-confirm checkout. | `cart-card` |
-
-Preview every one live at [pinui.xyz](https://pinui.xyz).
-
-## Install
-
-Each component is served as a shadcn registry item — no package to add:
+## Use a component
 
 ```bash
 npx shadcn@latest add "https://pinui.xyz/r/<slug>.json"
 ```
 
-This writes the component and its stylesheet to `components/pinui/`. The only
-dependency is [Motion](https://motion.dev).
+Every component's page has its exact command, ready to copy. The only dependency
+is [Motion](https://motion.dev).
 
-## Development
+## Run locally
 
 ```bash
 npm install
-npm run dev      # http://localhost:3100
-npm run build
+npm run dev
 ```
 
-Requires Node 20.9+. Built with Next.js 16, React 19, TypeScript and Motion.
-
-Optional environment variables: `NEXT_PUBLIC_SITE_URL`, and `SUPABASE_URL` with
-`SUPABASE_PUBLISHABLE_KEY` for the waitlist and updates signups. Without them the
-site runs as normal in development and skips the signup writes; in production the
-forms report an error until they are set.
-
-## Deploying
-
-The site deploys to [Vercel](https://vercel.com) as a standard Next.js project —
-no `vercel.json` needed. Import the repository, keep the detected framework
-preset (Next.js, `npm run build`), and add the three variables above under
-**Settings → Environment Variables** for Production and Preview. Point the
-domain at the project under **Settings → Domains**.
+Opens on http://localhost:3100. Requires Node 20.9+.
 
 ## License
 
-The components are MIT licensed — use them freely, including commercially. The
-Pin UI name, logo and demo media are not included. See the
-[terms](https://pinui.xyz/terms).
-
-<p align="center">
-  <sub>Built by <a href="https://github.com/Rachit315">Rachit</a> · <a href="https://pinui.xyz">pinui.xyz</a></sub>
-</p>
+MIT for the components. The Pin UI name, logo and demo media are not included —
+see the [terms](https://pinui.xyz/terms).

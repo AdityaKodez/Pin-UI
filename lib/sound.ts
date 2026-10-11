@@ -300,3 +300,77 @@ export function playConfirm() {
     darken: -10,
   });
 }
+
+/* ------------------------------------------------------------ the keyswitch -- */
+
+/**
+ * One second of white noise, made once: the raw material of every switch click.
+ * A click is a burst of it, shaped by a filter and an envelope a few
+ * milliseconds long.
+ */
+let noise: AudioBuffer | null = null;
+
+function noiseBuffer(audio: AudioContext) {
+  if (noise && noise.sampleRate === audio.sampleRate) return noise;
+  const length = audio.sampleRate;
+  noise = audio.createBuffer(1, length, audio.sampleRate);
+  const data = noise.getChannelData(0);
+  for (let i = 0; i < length; i += 1) data[i] = Math.random() * 2 - 1;
+  return noise;
+}
+
+/** A filtered burst of noise: the hard, dry edge of a switch. */
+function tick(
+  audio: AudioContext,
+  out: AudioNode,
+  { freq, q, level, length, at = 0 }: { freq: number; q: number; level: number; length: number; at?: number },
+) {
+  const when = audio.currentTime + at;
+  const source = audio.createBufferSource();
+  source.buffer = noiseBuffer(audio);
+
+  const band = audio.createBiquadFilter();
+  band.type = "bandpass";
+  band.frequency.value = freq;
+  band.Q.value = q;
+
+  const gain = audio.createGain();
+  gain.gain.setValueAtTime(0.0001, when);
+  gain.gain.exponentialRampToValueAtTime(level, when + 0.0015);
+  gain.gain.exponentialRampToValueAtTime(0.0001, when + length);
+
+  source.connect(band).connect(gain).connect(out);
+  /* a different stretch of the noise each time, so no two presses are identical */
+  source.start(when, Math.random() * 0.9, length + 0.02);
+  source.onended = () => {
+    source.disconnect();
+    band.disconnect();
+    gain.disconnect();
+  };
+}
+
+/**
+ * A key going down and bottoming out — a mechanical switch, as the footer's
+ * enter key is drawn. Three parts land together: the switch's bright tick, the
+ * keycap's low thump on the plate, and a short ring of the cap's own plastic.
+ * Each press is a touch different in pitch, the way no two real presses are.
+ */
+export function playKeyDown() {
+  const e = engine();
+  if (!e) return;
+  const vary = 1 + (Math.random() - 0.5) * 0.06;
+
+  tick(e.ctx, e.bus, { freq: 2600 * vary, q: 1.1, level: 0.5, length: 0.028 });
+  body(e.ctx, e.bus, { freq: 170 * vary, level: 0.34, length: 0.085 });
+  pluck(e.ctx, e.bus, { freq: 880 * vary, at: 0.002, level: 0.06, decay: 0.09, darken: -14 });
+}
+
+/** The key springing back up: the same switch, lighter and higher, a little quieter. */
+export function playKeyUp() {
+  const e = engine();
+  if (!e) return;
+  const vary = 1 + (Math.random() - 0.5) * 0.06;
+
+  tick(e.ctx, e.bus, { freq: 3800 * vary, q: 1.4, level: 0.26, length: 0.018 });
+  body(e.ctx, e.bus, { freq: 260 * vary, level: 0.1, length: 0.045 });
+}

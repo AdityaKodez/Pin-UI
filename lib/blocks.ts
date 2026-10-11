@@ -1,0 +1,118 @@
+/**
+ * Blocx — Pin UI's library of whole page sections.
+ *
+ * Where the components are single pieces, a block is a section you drop into a
+ * page: a hero, a pricing table, a footer. Each one previews live inside a
+ * frame you can switch between desktop, tablet and phone widths, and its
+ * source sits on the Code tab beside it.
+ *
+ * Every block lives in components/blocks/demo as a component and its own
+ * stylesheet, every class prefixed so a block can sit on any page without its
+ * styles reaching anything else. Adding one is an entry here, its component in
+ * the preview's list, and its picture in public/blocx/thumbs.
+ *
+ * Blocks held back from the shelf live in a local, untracked vault and are
+ * moved in and out of the two marked places with its script.
+ */
+
+/** Every kind of section a block can be, in the order the sidebar lists them. */
+export const BLOCK_CATEGORIES = [
+  { id: "hero", name: "Hero Section", shelf: "Hero Section" },
+  { id: "features", name: "Features", shelf: "Features Section" },
+  { id: "contact", name: "Contact", shelf: "Contact Section" },
+  { id: "footer", name: "Footer", shelf: "Footer Section" },
+  { id: "comparison", name: "Comparison", shelf: "Comparison Section" },
+  { id: "navigation", name: "Navigation", shelf: "Navigation" },
+  { id: "auth", name: "Auth", shelf: "Auth" },
+  { id: "cta", name: "Call To Action", shelf: "Call To Action" },
+  { id: "faq", name: "FAQ", shelf: "FAQ Section" },
+  { id: "pricing", name: "Pricing", shelf: "Pricing Section" },
+  { id: "stats", name: "Stats", shelf: "Stats Section" },
+  { id: "not-found", name: "404", shelf: "404 Pages" },
+  { id: "profile", name: "Profile", shelf: "Profile" },
+  { id: "about", name: "About", shelf: "About Section" },
+  { id: "waitlist", name: "Waitlist", shelf: "Waitlist" },
+  { id: "showcase", name: "Showcase", shelf: "Showcase" },
+  { id: "how-it-works", name: "How It Works", shelf: "How It Works" },
+  { id: "testimonials", name: "Testimonials", shelf: "Testimonial Section" },
+] as const;
+
+export type BlockCategoryId = (typeof BLOCK_CATEGORIES)[number]["id"];
+
+export type Block = {
+  slug: string;
+  name: string;
+  category: BlockCategoryId;
+  /** The card's picture on the shelf: the block itself, captured at a desktop width. */
+  thumb: string;
+  /** The block's source, as it sits in components/blocks/demo — shown on the Code tab, main file first. */
+  files: string[];
+  /** One line for the shelf card, under the name. */
+  summary: string;
+  /** Wears a "New" tag on the shelf — the latest blocks to arrive. */
+  isNew?: boolean;
+  /** A few lines for the info panel. */
+  note: string;
+  stack: string;
+  /** The block's own background, so the frame never flashes white while it loads. */
+  canvas: string;
+};
+
+export const BLOCKS: Block[] = [
+  {
+    slug: "orbit-hero",
+    name: "Orbit Hero",
+    category: "hero",
+    thumb: "/blocx/thumbs/orbit-hero.webp",
+    files: ["OrbitHero.tsx", "orbit-hero.css", "orbit-globe.ts"],
+    summary: "Space hero with a live, turning WebGL Earth.",
+    isNew: true,
+    note: "A space hero: a bracket nav, a headline that blurs in word by word, a glowing Enter Orbit button and a live WebGL Earth turning at the bottom edge.",
+    stack: "React · CSS · Motion · WebGL",
+    canvas: "#121317",
+  },
+  {
+    slug: "odometer-pricing",
+    name: "Odometer Pricing",
+    category: "pricing",
+    thumb: "/blocx/thumbs/odometer-pricing.webp",
+    files: ["OdometerPricing.tsx", "odometer-pricing.css"],
+    summary: "Prices roll like an odometer on billing.",
+    isNew: true,
+    note: "Three plans with a billing switch: prices roll like an odometer, the popular plan glows with grain and a light trail follows the cursor; a swipeable row on phones.",
+    stack: "React · CSS · Motion",
+    canvas: "#ffffff",
+  },
+  {
+    slug: "caremetric-footer",
+    name: "CareMetric Footer",
+    category: "footer",
+    thumb: "/blocx/thumbs/caremetric-footer.webp",
+    files: ["CaremetricFooter.tsx", "caremetric-footer.css", "caremetric-mark.ts"],
+    summary: "Green link columns over a giant, bleeding mark.",
+    isNew: true,
+    note: "A soft green panel with four columns of links and a giant CareMetric mark that pops in and bleeds off the bottom edge.",
+    stack: "React · CSS · Motion",
+    canvas: "#ffffff",
+  },
+  /* blocks-vault: entries */
+];
+
+/** The shelves on the index, in the order the index shows them, empty ones left out. */
+export const SHELF_ORDER: BlockCategoryId[] = ["hero", "pricing", "contact", "footer"];
+
+export function blockBySlug(slug: string): Block | undefined {
+  return BLOCKS.find((block) => block.slug === slug);
+}
+
+export function blocksIn(category: BlockCategoryId): Block[] {
+  return BLOCKS.filter((block) => block.category === category);
+}
+
+export function categoryName(id: BlockCategoryId): string {
+  return BLOCK_CATEGORIES.find((c) => c.id === id)?.name ?? id;
+}
+
+export function shelfName(id: BlockCategoryId): string {
+  return BLOCK_CATEGORIES.find((c) => c.id === id)?.shelf ?? id;
+}

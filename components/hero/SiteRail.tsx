@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import BlocksLink from "@/components/BlocksLink";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ThemeMark from "../ThemeMark";
@@ -94,6 +95,7 @@ export default function SiteRail() {
                 <a className="rail__link" href="#components">
                   Components
                 </a>
+                <BlocksLink className="rail__link" />
                 <a className="rail__link" href="#testimonials">
                   Testimonials
                 </a>
@@ -106,6 +108,7 @@ export default function SiteRail() {
                 <Link className="rail__link" href="/#components">
                   Components
                 </Link>
+                <BlocksLink className="rail__link" />
                 <Link className="rail__link" href="/#testimonials">
                   Testimonials
                 </Link>

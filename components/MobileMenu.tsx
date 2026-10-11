@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import { enterBlocx } from "./BlocksLink";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
@@ -33,6 +34,7 @@ import { lenisRef, scrollToElement } from "@/lib/lenis";
 const PLACES = [
   { label: "Home", href: "/#top", match: (p: string) => p === "/" },
   { label: "Components", href: "/#components", match: (p: string) => p.startsWith("/components") },
+  { label: "Blocx", href: "/blocx", match: (p: string) => p.startsWith("/blocx") },
   { label: "Testimonials", href: "/#testimonials", match: (p: string) => p.startsWith("/testimonials") },
 ];
 
@@ -148,6 +150,14 @@ export default function MobileMenu({
   }
 
   function go(e: React.MouseEvent, href: string) {
+    /* Blocx is entered through its gate: the sheet closes and the curtain comes up */
+    if (href === "/blocx") {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      setOpen(false);
+      enterBlocx();
+      return;
+    }
     const hash = href.split("#")[1];
     /* a section of the page we are on: close first, then glide */
     if (hash && pathname === "/") {
