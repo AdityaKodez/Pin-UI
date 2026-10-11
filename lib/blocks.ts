@@ -60,6 +60,18 @@ export type Block = {
 
 export const BLOCKS: Block[] = [
   {
+    slug: "luna-hero",
+    name: "Luna Hero",
+    category: "hero",
+    thumb: "/blocx/thumbs/luna-hero.webp",
+    files: ["LunaHero.tsx", "LunaNavbar.tsx", "luna-catalog.ts", "luna-hero.css"],
+    summary: "Pixel storefront hero with a floating mega menu.",
+    isNew: true,
+    note: "A digital storefront hero with a stepped pixel backdrop, a floating navbar, a two-column category menu and featured card, searchable catalog and mobile navigation. Light, dark and system themes; configurable routes and sample catalog data. Install @base-ui/react and @phosphor-icons/react alongside Motion. The placeholder brand mark is from Logoipsum under its own license.",
+    stack: "Next.js · React · CSS · Motion · Base UI · Phosphor",
+    canvas: "#ffffff",
+  },
+  {
     slug: "orbit-hero",
     name: "Orbit Hero",
     category: "hero",
